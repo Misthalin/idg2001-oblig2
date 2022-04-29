@@ -1,6 +1,10 @@
 const aedes = require("aedes")();
 const server = require("net").createServer(aedes.handle);
+require('dotenv').config();
+const connectDB = require("./db")
 const port = 1883;
+
+connectDB();
 
 server.listen(port, () => {
   console.log(`Aedes listening on port: ${port}`);

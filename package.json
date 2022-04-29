@@ -2,10 +2,10 @@
   "name": "oblig-2",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "broker.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
+    "start": "node broker.js",
+    "dev": "nodemon broker.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -14,6 +14,8 @@
   "dependencies": {
     "aedes": "^0.46.3",
     "csv-parser": "^3.0.0",
+    "dotenv": "^16.0.0",
+    "mongoose": "^6.3.1",
     "mqtt": "^4.3.7"
   }
 }
