@@ -1,16 +1,24 @@
-const { input, client, sensor, topic } = require("./config").config;
-client.on("connect", () => {
-  if (input !== "json") {
-    client.end();
-    return console.log("Choose json as your input type");
-  }
-  if (input === "json") {
-      message = JSON.stringify(sensor);
-      console.log(message);
-  }
+const { input, client, topic } = require("./config").config;
+
+client.on("connect", async() => {
   setInterval(() => {
-    console.log("Message sent from sensorOne" + message);
+    if (input !== "json") {
+      client.end();
+      return console.log("Choose json as your input type");
+    }
+
+    const sensor = {
+      data: {
+        n: "sensorOne",
+        u: "W",
+        v: Math.floor(Math.random() * 150),
+        t: Date.now(),
+      },
+    }
+  
+    const message = JSON.stringify(sensor)
     client.publish(topic, message);
+    console.log("Message sent from sensorOne" + message);
     //console.log(topic);
-  }, 10000);
+  }, 600000);
 });
