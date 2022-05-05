@@ -1,39 +1,40 @@
 const aedes = require("aedes")();
 const server = require("net").createServer(aedes.handle);
 const port = 1883;
+const mongoose = require("mongoose");
+const { input } = require("./config").config;
+const ElectricityModel = require("./electricityModel");
 
 server.listen(port, () => {
   console.log(`Aedes listening on port: ${port}`);
-  aedes.publish({ topic: "aedes/hello", payload: `Hello I am broker ${aedes.id}` });
-});
-aedes.on("client", (client) => {
-  console.log("Client Connected: \x1b[33m" + (client ? client.id : client) + "\x1b[0m", "to broker", aedes.id);
-});
-aedes.on("clientDisconnect", function (client) {
-  console.log("Client Disconnected: \x1b[31m" + (client ? client.id : client) + "\x1b[0m", "to broker", aedes.id);
-});
-aedes.on("subscribe", function (subscriptions, client) {
-  console.log(
-    "MQTT client \x1b[32m" + (client ? client.id : client) + "\x1b[0m subscribed to topics: " + subscriptions.map((s) => s.topic).join("\n"),
-    "from broker",
-    aedes.id
-  );
-});
-aedes.on("unsubscribe", function (subscriptions, client) {
-  console.log(
-    "MQTT client \x1b[32m" + (client ? client.id : client) + "\x1b[0m unsubscribed to topics: " + subscriptions.join("\n"),
-    "from broker",
-    aedes.id
-  );
 });
 
-// fired when a message is published
-aedes.on("publish", async function (packet, client) {
-  console.log(
-    "Client \x1b[31m" + (client ? client.id : "BROKER_" + aedes.id) + "\x1b[0m has published, " + packet.payload.toString(),
-    "on",
-    packet.topic,
-    "to broker",
-    aedes.id
-  );
+aedes.on("publish", async (packet) => {
+  let payload = packet.payload.toString();
+  let output;
+
+  switch (input) {
+    case "json":
+      output = "{";
+      break;
+    case "xml":
+      output = "<";
+      break;
+  }
+  if (payload.slice(0, 1) == output && !payload.includes("client")) {
+    if (input == "json") {
+      payload = JSON.parse(payload);
+    }
+    const data = new ElectricityModel({ payload });
+    await data.save();
+    console.log(`Payload [ ${input.toUpperCase()} ] is now saved as JSON in db`);
+  }
 });
+
+mongoose
+  .connect("mongodb://localhost:27017/idg2001-oblig2", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("Connected to DB!"))
+  .catch((error) => console.log(error));
