@@ -23,5 +23,5 @@ client.on("connect", () => {
       }
     console.log("Message sent from sensorOne: " + message);
     client.publish(topic, message);
-  }, 60000);
+  }, 5000);
 });
