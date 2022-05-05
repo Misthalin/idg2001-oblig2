@@ -1,11 +1,15 @@
 const { input, client, topic } = require("./config").config;
+const cbor = require('cbor-x');
+
 
 client.on("connect", async() => {
   setInterval(() => {
-    if (input !== "json") {
+    if (input !== "json" && input !== "cbor") {
       client.end();
       return console.log("Choose json as your input type");
     }
+
+    
 
     const sensor = {
       data: {
@@ -15,10 +19,14 @@ client.on("connect", async() => {
         t: Date.now(),
       },
     }
-  
-    const message = JSON.stringify(sensor)
+
+    let message = JSON.stringify(sensor)
+    if (input == "cbor") {
+      message = cbor.encode(sensor);
+    }
     client.publish(topic, message);
+
     console.log("Message sent from sensorOne" + message);
     //console.log(topic);
-  }, 600000);
+  }, 10000);
 });

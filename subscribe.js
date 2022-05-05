@@ -1,8 +1,12 @@
 const { input, topic, client } = require("./config.js").config;
+const cbor = require('cbor-x');
 
 const readMessage = (message) => {
   if (input == "json") {
     output = JSON.parse(message.toString());
+  }
+  if (input == "cbor") {
+    output = cbor.decode(message);
   }
   //console.log(output.data);
   return output.data;
