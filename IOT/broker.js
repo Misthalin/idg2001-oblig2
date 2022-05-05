@@ -3,7 +3,7 @@ const server = require("net").createServer(aedes.handle);
 const port = 1883;
 const mongoose = require("mongoose");
 const { input } = require("./config").config;
-const ElectricityModel = require("./electricityModel");
+const TemperatureModel = require("./temperatureModel");
 const cbor = require("cbor-x");
 const parser = require("xml2json");
 const EXI4JSON = require("exificient.js");
@@ -14,6 +14,7 @@ server.listen(port, () => {
 
 aedes.on("publish", async (packet) => {
   let payload = packet.payload.toString();
+  const array = payload.split(",");
   let output;
 
   switch (input) {
@@ -27,7 +28,7 @@ aedes.on("publish", async (packet) => {
       output = "<";
       break;
     case "exi":
-      output = ""; //NOT SURE YET
+      output = "1";
       break;
   }
   if (payload.slice(0, 1) == output && !payload.includes("client")) {
@@ -41,9 +42,9 @@ aedes.on("publish", async (packet) => {
       payload = cbor.decode(payload);
     }
     if (input == "exi") {
-      payload = EXI4JSON.exify(sensor);
+      payload = EXI4JSON.parse(array);
     }
-    const data = new ElectricityModel({ payload });
+    const data = new TemperatureModel({ payload });
     await data.save();
     console.log(`Payload [ ${input.toUpperCase()} ] is now saved as JSON in db`);
   }

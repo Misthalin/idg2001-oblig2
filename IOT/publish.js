@@ -27,7 +27,8 @@ client.on("connect", () => {
       message = json2xml(sensor);
     }
     if (input == "exi") {
-      message = EXI4JSON.exify(sensor);
+      const uint8Array = EXI4JSON.exify(sensor);
+      message = uint8Array.toString();
     }
     console.log("Message sent from sensorOne: " + message);
     client.publish(topic, message);

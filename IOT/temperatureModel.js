@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const electricitySchema = new mongoose.Schema({
+const temperatureSchema = new mongoose.Schema({
   payload: {
     data: {
       n: String,
@@ -9,4 +9,4 @@ const electricitySchema = new mongoose.Schema({
     },
   },
 });
-module.exports = mongoose.model("Electricity", electricitySchema)
+module.exports = mongoose.model("Temperature", temperatureSchema)

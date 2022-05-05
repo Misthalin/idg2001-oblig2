@@ -14,9 +14,11 @@ const readMessage = (message) => {
     output = JSON.parse(parser.toJson(message.toString()));
   }
   if (input == "exi") {
-    output = EXI4JSON.parse(sensor);
+    const messageString = message.toString();
+    const array = messageString.split(",");
+    output = EXI4JSON.parse(array);
   }
-  console.log(output);
+  console.log(output.data);
   return output.data;
 };
 const messageTemplate = (sensor, topic) => {
