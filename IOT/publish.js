@@ -13,7 +13,7 @@ client.on("connect", () => {
       data: {
         n: "sensor",
         u: "Cel",
-        v: Math.floor(Math.random() * 20),
+        v: randomNum(10, 28),
         t: Date.now(),
       },
     };
@@ -34,3 +34,6 @@ client.on("connect", () => {
     client.publish(topic, message);
   }, 5000);
 });
+const randomNum = (min, max) => {
+  return Math.floor(Math.random() * (max - min)) + min;
+};
