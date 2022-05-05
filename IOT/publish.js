@@ -32,7 +32,7 @@ client.on("connect", () => {
     }
     console.log("Message sent from sensor: " + message);
     client.publish(topic, message);
-  }, 5000);
+  }, 600000);
 });
 const randomNum = (min, max) => {
   return Math.floor(Math.random() * (max - min)) + min;
