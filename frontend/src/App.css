@@ -2,6 +2,17 @@
   text-align: center;
 }
 
+p {
+  margin: 1rem auto;
+  font-size: 2em;
+  font-weight: 200;
+  text-align: center;
+}
+
+div {
+  margin: 0 auto;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
