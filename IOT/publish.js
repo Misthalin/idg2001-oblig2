@@ -30,7 +30,7 @@ client.on("connect", () => {
       const uint8Array = EXI4JSON.exify(sensor);
       message = uint8Array.toString();
     }
-    console.log("Message sent from sensorOne: " + message);
+    console.log("Message sent from sensor: " + message);
     client.publish(topic, message);
   }, 5000);
 });
