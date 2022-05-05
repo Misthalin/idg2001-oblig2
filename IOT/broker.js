@@ -2,7 +2,7 @@ require("dotenv").config();
 
 const aedes = require("aedes")();
 const server = require("net").createServer(aedes.handle);
-const port = process.env.PORT || 1883;
+const port = 1883;
 const mongoose = require("mongoose");
 const { input } = require("./config").config;
 const TemperatureModel = require("./temperatureModel");
