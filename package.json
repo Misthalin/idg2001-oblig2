@@ -4,7 +4,8 @@
   "description": "",
   "main": "frontend/index.js",
   "scripts": {
-    "start": "concurrently \"cd IOT && npm install && npm start\" \"cd server && npm install && npm start\""
+    "start": "concurrently \"cd IOT && npm start\" \"cd server && npm start\"",
+    "dev": "concurrently \"cd IOT && npm run dev\" \"cd server && npm run dev\""
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,16 @@
   },
   "homepage": "https://github.com/Misthalin/idg2001-oblig2#readme",
   "dependencies": {
-    "concurrently": "^7.1.0"
+    "concurrently": "^7.1.0",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.1",
+    "mongoose": "^6.3.2",
+    "aedes": "^0.46.3",
+    "cbor-x": "^1.2.1",
+    "csv-parser": "^3.0.0",
+    "exificient.js": "^0.0.5",
+    "json2xml": "^0.1.3",
+    "mqtt": "^4.3.7",
+    "xml2json": "^0.12.0"
   }
 }
