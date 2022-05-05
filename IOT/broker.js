@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const aedes = require("aedes")();
 const server = require("net").createServer(aedes.handle);
 const port = 1883;
@@ -51,7 +53,7 @@ aedes.on("publish", async (packet) => {
 });
 
 mongoose
-  .connect("mongodb://localhost:27017/idg2001-oblig2", {
+  .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
