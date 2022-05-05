@@ -1,0 +1,23 @@
+{
+  "name": "idg2001-oblig2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "frontend/index.js",
+  "scripts": {
+    "start": "concurrently \"cd IOT && npm start\" \"cd server && npm start\" \"cd frontend && yarn start\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Misthalin/idg2001-oblig2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Misthalin/idg2001-oblig2/issues"
+  },
+  "homepage": "https://github.com/Misthalin/idg2001-oblig2#readme",
+  "dependencies": {
+    "concurrently": "^7.1.0"
+  }
+}
