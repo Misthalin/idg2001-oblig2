@@ -4,6 +4,7 @@ const port = 1883;
 const mongoose = require("mongoose");
 const { input } = require("./config").config;
 const ElectricityModel = require("./electricityModel");
+const cbor = require("cbor-x");
 
 server.listen(port, () => {
   console.log(`Aedes listening on port: ${port}`);
@@ -17,6 +18,12 @@ aedes.on("publish", async (packet) => {
     case "json":
       output = "{";
       break;
+    case "xml":
+      output = "<";
+      break;
+    case "cbor":
+      output = "<";
+      break;
   }
   if (payload.slice(0, 1) == output && !payload.includes("client")) {
     if (input == "json") {
@@ -24,6 +31,9 @@ aedes.on("publish", async (packet) => {
     }
     if (input == "xml") {
       console.log("XML input detected");
+    }
+    if (input == "cbor") {
+      payload = cbor.decode(payload);
     }
     const data = new ElectricityModel({ payload });
     await data.save();

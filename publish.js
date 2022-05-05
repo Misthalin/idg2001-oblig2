@@ -1,7 +1,8 @@
 const { input, client, topic } = require("./config").config;
+const cbor = require('cbor-x');
 
 client.on("connect", () => {
-  if (input !== "json" && input !== "xml") {
+  if (input !== "json" && input !== "xml" && input !== "cbor") {
     client.end();
     return console.log("Choose JSON or XML as your input type");
   }
@@ -17,6 +18,9 @@ client.on("connect", () => {
     if (input === "json") {
       message = JSON.stringify(sensor);
     }
+    if (input == "cbor") {
+        message = cbor.encode(sensor);
+      }
     console.log("Message sent from sensorOne: " + message);
     client.publish(topic, message);
   }, 60000);
