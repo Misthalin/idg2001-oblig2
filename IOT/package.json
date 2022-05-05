@@ -2,11 +2,10 @@
   "name": "oblig-2",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "broker.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "concurrently \"node broker.js\" \"node subscribe.js\" \"node publish.js\"",
+    "dev": "concurrently \"nodemon broker.js\" \"nodemon subscribe.js\" \"nodemon publish.js\""
   },
   "keywords": [],
   "author": "",
@@ -14,6 +13,7 @@
   "dependencies": {
     "aedes": "^0.46.3",
     "cbor-x": "^1.2.1",
+    "concurrently": "^7.1.0",
     "csv-parser": "^3.0.0",
     "dotenv": "^16.0.0",
     "exificient.js": "^0.0.5",
