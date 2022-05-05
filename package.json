@@ -4,7 +4,7 @@
   "description": "",
   "main": "frontend/index.js",
   "scripts": {
-    "start": "concurrently \"cd IOT && npm install && npm start\" \"cd server && npm start\""
+    "start": "concurrently \"cd IOT && npm install && npm start\" \"cd server && npm install && npm start\""
   },
   "repository": {
     "type": "git",
