@@ -10,14 +10,17 @@ const readMessage = (message) => {
 const messageTemplate = (sensor, topic) => {
   const { u, v, t, n } = sensor;
   let prefix, value, message;
-  value = `${v}kWh`;
-  if (u === "W") {
-    prefix = "Consumption";
-    if (v < 50) {
-      message = "Current consumption is good";
+  value = `${v}C`;
+  if (u === "Cel") {
+    prefix = "Temperature";
+    if (v < 15) {
+      message = "Turn up the heat!";
     }
-    if (v > 50) {
-      message = "Please check your electricity consumption!";
+    if (v > 15 && v < 20) {
+      message = "Current temperature is good!";
+    }
+    if (v > 20) {
+      message = "Turn down the heat!";
     }
   }
   return console.log(

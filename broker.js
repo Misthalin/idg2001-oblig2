@@ -17,13 +17,13 @@ aedes.on("publish", async (packet) => {
     case "json":
       output = "{";
       break;
-    case "xml":
-      output = "<";
-      break;
   }
   if (payload.slice(0, 1) == output && !payload.includes("client")) {
     if (input == "json") {
       payload = JSON.parse(payload);
+    }
+    if (input == "xml") {
+      console.log("XML input detected");
     }
     const data = new ElectricityModel({ payload });
     await data.save();
