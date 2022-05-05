@@ -2,6 +2,6 @@ const mqtt = require("mqtt");
 
 exports.config = {
   client: mqtt.connect("mqtt://localhost:1883"),
-  input: "exi",
+  input: "json",
   topic: "Temperature/sensorOne",
 };
