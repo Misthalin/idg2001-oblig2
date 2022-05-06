@@ -34,7 +34,7 @@ client.on("connect", () => {
     }
     console.log("Message sent from sensor: " + message);
     client.publish(topic, message);
-  }, 60000);
+  }, 600000);
 });
 
 // Generates a random number between two values
