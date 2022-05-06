@@ -5,18 +5,18 @@ const EXI4JSON = require("exificient.js");
 
 const readMessage = async (message) => {
   if (input == "json") {
-    output =  await JSON.parse(message.toString());
+    output = JSON.parse(message.toString());
   }
   if (input == "cbor") {
-    output =  await cbor.decode(message);
+    output = cbor.decode(message);
   }
   if (input == "xml") {
-    output =  await JSON.parse(parser.toJson(message.toString()));
+    output = JSON.parse(parser.toJson(message.toString()));
   }
   if (input == "exi") {
     const messageString = message.toString();
     const array = messageString.split(",");
-    output =  await EXI4JSON.parse(array);
+    output = EXI4JSON.parse(array);
   }
   //console.log(output.data);
   return output.data;
