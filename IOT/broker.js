@@ -2,7 +2,7 @@ require("dotenv").config();
 
 const aedes = require("aedes")();
 const server = require("net").createServer(aedes.handle);
-const port = 1883;
+const port = 1888;
 const mongoose = require("mongoose");
 const { input } = require("./config").config;
 const TemperatureModel = require("./temperatureModel");
@@ -18,7 +18,7 @@ aedes.on("publish", async (packet) => {
   let payload = packet.payload.toString();
   const array = payload.split(",");
   let output;
-
+  //console.log("Payload: " + payload);
   switch (input) {
     case "json":
       output = "{";
@@ -27,7 +27,7 @@ aedes.on("publish", async (packet) => {
       output = "<";
       break;
     case "cbor":
-      output = "<";
+      output = "�";
       break;
     case "exi":
       output = "1";
@@ -46,7 +46,7 @@ aedes.on("publish", async (packet) => {
       payload = JSON.parse(parser.toJson(payload.toString()));
     }
     if (input == "cbor") {
-      payload = cbor.decode(payload);
+      payload = cbor.decode(packet.payload);
     }
     if (input == "exi") {
       payload = EXI4JSON.parse(array);
