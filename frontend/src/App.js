@@ -15,12 +15,16 @@ class App extends React.Component {
       .get("/temperatures")
       .then((res) => {
         const result = res.data.temperatures;
+
+        // Set datapoints for the line chart
         const data = result.map((item) => {
           return {
             t: moment(item.payload.data.t).format("LT"),
             v: item.payload.data.v,
           };
         });
+
+        // Check amount of temperature data points
         let count = 0, sumTemp = 0;
         for (let key in data) {
           if (data.hasOwnProperty(key)) {
@@ -31,6 +35,7 @@ class App extends React.Component {
           }
         }
 
+        // Temperatures to array
         const arrOfTemp = result.map((item => {
           return item.payload.data.v
         }))
