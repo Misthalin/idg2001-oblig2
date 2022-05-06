@@ -3,20 +3,20 @@ const cbor = require("cbor-x");
 const parser = require("xml2json");
 const EXI4JSON = require("exificient.js");
 
-const readMessage = (message) => {
+const readMessage = async (message) => {
   if (input == "json") {
-    output = JSON.parse(message.toString());
+    output =  await JSON.parse(message.toString());
   }
   if (input == "cbor") {
-    output = cbor.decode(message);
+    output =  await cbor.decode(message);
   }
   if (input == "xml") {
-    output = JSON.parse(parser.toJson(message.toString()));
+    output =  await JSON.parse(parser.toJson(message.toString()));
   }
   if (input == "exi") {
     const messageString = message.toString();
     const array = messageString.split(",");
-    output = EXI4JSON.parse(array);
+    output =  await EXI4JSON.parse(array);
   }
   //console.log(output.data);
   return output.data;
@@ -51,11 +51,6 @@ const messageTemplate = (sensor, topic) => {
 };
 client.on("message", (topic, message) => {
   messageTemplate(readMessage(message), topic);
-  console.log(`
-    -------------------------------------------------------
-    After: ${Date.now()}
-    -------------------------------------------------------
-    `);
 });
 client.on("connect", () => {
   client.subscribe(topic);

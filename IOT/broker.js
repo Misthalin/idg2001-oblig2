@@ -36,23 +36,35 @@ aedes.on("publish", async (packet) => {
   if (payload.slice(0, 1) == output && !payload.includes("client")) {
     console.log(`
     -------------------------------------------------------
-    Before: ${Date.now()}
+    Encode start: ${Date.now()}
     -------------------------------------------------------
     `);
     if (input == "json") {
-      payload = JSON.parse(payload);
+      payload = await JSON.parse(payload);
     }
     if (input == "xml") {
-      payload = JSON.parse(parser.toJson(payload.toString()));
+      payload = await JSON.parse(parser.toJson(payload.toString()));
     }
     if (input == "cbor") {
-      payload = cbor.decode(packet.payload);
+      payload = await cbor.decode(packet.payload);
     }
     if (input == "exi") {
-      payload = EXI4JSON.parse(array);
+      payload = await EXI4JSON.parse(array);
     }
+    console.log(`
+    -------------------------------------------------------
+    Encode done: ${Date.now()}
+    -------------------------------------------------------
+    `);
+
     const data = new TemperatureModel({ payload });
     await data.save();
+
+    console.log(`
+    -------------------------------------------------------
+    Stored on server: ${Date.now()}
+    -------------------------------------------------------
+    `);
     console.log(`Payload [ ${input.toUpperCase()} ] is now saved as JSON in db`);
   }
 });
