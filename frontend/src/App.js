@@ -2,6 +2,7 @@ import "./App.css";
 import React from "react";
 import axios from "axios";
 import { LineChart, Line, CartesianGrid, XAxis, YAxis } from "recharts";
+import moment from "moment";
 
 class App extends React.Component {
   constructor() {
@@ -16,7 +17,7 @@ class App extends React.Component {
         const result = res.data.temperatures;
         const data = result.map((item) => {
           return {
-            t: item.payload.data.t,
+            t: moment(item.payload.data.t).format("LT"),
             v: item.payload.data.v,
           };
         });
