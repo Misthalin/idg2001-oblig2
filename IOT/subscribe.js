@@ -18,7 +18,7 @@ const readMessage = (message) => {
     const array = messageString.split(",");
     output = EXI4JSON.parse(array);
   }
-  console.log(output.data);
+  //console.log(output.data);
   return output.data;
 };
 const messageTemplate = (sensor, topic) => {
