@@ -51,11 +51,6 @@ aedes.on("publish", async (packet) => {
     if (input == "exi") {
       payload = EXI4JSON.parse(array);
     }
-    console.log(`
-    -------------------------------------------------------
-    After: ${Date.now()}
-    -------------------------------------------------------
-    `);
     const data = new TemperatureModel({ payload });
     await data.save();
     console.log(`Payload [ ${input.toUpperCase()} ] is now saved as JSON in db`);

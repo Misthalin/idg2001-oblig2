@@ -51,6 +51,11 @@ const messageTemplate = (sensor, topic) => {
 };
 client.on("message", (topic, message) => {
   messageTemplate(readMessage(message), topic);
+  console.log(`
+    -------------------------------------------------------
+    After: ${Date.now()}
+    -------------------------------------------------------
+    `);
 });
 client.on("connect", () => {
   client.subscribe(topic);
