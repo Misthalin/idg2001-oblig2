@@ -7,7 +7,7 @@ import moment from "moment";
 class App extends React.Component {
   constructor() {
     super();
-    this.state = { data: [] };
+    this.state = { data: [], average: "", maxTemp: "", minTemp: "" };
   }
 
   componentDidMount() {
@@ -21,18 +21,35 @@ class App extends React.Component {
             v: item.payload.data.v,
           };
         });
-        this.setState({ data });
+        let count = 0, sumTemp = 0;
+        for (let key in data) {
+          if (data.hasOwnProperty(key)) {
+            if (data[key].hasOwnProperty("v")) {
+              sumTemp += data[key].v;
+              count += 1;
+            }
+          }
+        }
+
+        const arrOfTemp = result.map((item => {
+          return item.payload.data.v
+        }))
+
+        const minTemp = Math.min(...arrOfTemp);
+        const maxTemp = Math.max(...arrOfTemp);
+        const average = sumTemp / count;
+
+        this.setState({ data, average, maxTemp, minTemp });
+
       })
       .catch((err) => console.log(err));
   }
-  /* const data = [
-    { t: '11:23', v: 24 },
-    { t: '11:24', v: 25 },
-    { t: '11:25', v: 22 },
-    { t: '11:26', v: 17 }
-  ];*/
-
+  
   render() {
+    const round = (value, precision) => {
+      let multiplier = Math.pow(10, precision || 0);
+      return Math.round(value * multiplier) / multiplier;
+    }
     return (
       <div>
         <p>Temperature readings</p>
@@ -42,7 +59,11 @@ class App extends React.Component {
           <XAxis dataKey="t" />
           <YAxis />
         </LineChart>
+        <p>Average temperature: {round(this.state.average, 2)} °C</p>
+        <p>Lowest temperature: {this.state.minTemp} °C</p>
+        <p>Highest temperature: {this.state.maxTemp} °C</p>
       </div>
+
     );
   }
 }
