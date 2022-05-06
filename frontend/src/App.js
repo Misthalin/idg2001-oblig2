@@ -52,6 +52,7 @@ class App extends React.Component {
     }
     return (
       <div>
+        <p>Note: This is not a real sensor, data is currently randomly generated.</p>
         <p>Temperature readings</p>
         <LineChart width={600} height={300} data={this.state.data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
           <Line type="monotone" dataKey="v" stroke="#8884d8" />
